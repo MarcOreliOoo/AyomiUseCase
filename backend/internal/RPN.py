@@ -40,9 +40,3 @@ async def evaluate_rpn(expression):
 			session.refresh(rpn)
 
 	return calc[0]
-
-
-""" expression = input("Enter an expression in Reverse Polish Notation: ")
-result = evaluate_rpn(expression)
-print("Result:", result)
- """
