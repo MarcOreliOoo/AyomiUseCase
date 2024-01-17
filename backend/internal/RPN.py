@@ -1,5 +1,10 @@
+import datetime
+from backend.db.models import RPN
+from backend.db.database import engine
+from sqlmodel import Session
+
 #It supposes that token are splitted by spaces
-def evaluate_rpn(expression):
+async def evaluate_rpn(expression):
 	calc = []
 	operators = {'+': lambda x, y: x + y,
 				 '-': lambda x, y: x - y,
@@ -8,6 +13,7 @@ def evaluate_rpn(expression):
 				 '^': lambda x, y: x ** y,
 				 '%': lambda x, y: x % y}
 
+	expressionStr = expression
 	expression = expression.split()
 
 	if len(expression) % 2 == 0:
@@ -25,6 +31,13 @@ def evaluate_rpn(expression):
 			calc.append(result)
 		else:
 			raise ValueError("Invalid token: " + token)
+
+	if len(calc) == 1:
+		with Session(engine) as session:
+			rpn = RPN(expression=expressionStr, result=float(calc[0]), created_at=datetime.datetime.now())
+			session.add(rpn)
+			session.commit()
+			session.refresh(rpn)
 
 	return calc[0]
 
