@@ -2,8 +2,11 @@
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-from fastapi.responses import FileResponse
+from fastapi.responses import StreamingResponse
 from RPN import evaluate_rpn
+
+import pandas as pd
+import io
 
 app = FastAPI()
 
@@ -25,9 +28,12 @@ async def calcRPN(expression: str):
 async def calcRPN(expression: Expression):
     return {"result": evaluate_rpn(expression.expression)}
 
-@app.get("/download", response_class=FileResponse)
+@app.get("/download", response_class=StreamingResponse)
 async def download():
-	filePath = "path/to/data.csv"
-	response = FileResponse(filePath, media_type="text/csv")
+	data = pd.DataFrame([{"expression":"1 2 +","result":"3"},{"expression":"2 3 *","result":"6"},{"expression":"2 3 + 4 *","result":"20"}])
+	stream = io.StringIO()
+	data.to_csv(stream, index=False)
+	response = StreamingResponse(
+		iter([stream.getvalue()]), media_type="text/csv")
 	response.headers["Content-Disposition"] = "attachment; filename=data.csv"
 	return response
