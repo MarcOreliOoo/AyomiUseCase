@@ -1,11 +1,11 @@
 import { Download } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { URL_TO_FETCH } from "@/lib/utils";
 
 const DownloadComp = () => {
     const handleDownload = async () => {
         try {
-            const response = await fetch("http://localhost:8000/rpn/history");
-            console.log(response);
+            const response = await fetch(`${URL_TO_FETCH}/history`);
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }

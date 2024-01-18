@@ -20,7 +20,8 @@ class Expression(BaseModel):
 
 @router.post("/")
 async def calcRPN(expression: Expression):
-    return {"result": await evaluate_rpn(expression.expression)}
+	print(expression.expression)
+	return {"result": await evaluate_rpn(expression.expression)}
 
 
 @router.get("/history", response_class=StreamingResponse)

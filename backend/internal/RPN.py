@@ -6,6 +6,7 @@ from sqlmodel import Session
 #It supposes that token are splitted by spaces
 async def evaluate_rpn(expression):
 	calc = []
+	
 	operators = {'+': lambda x, y: x + y,
 				 '-': lambda x, y: x - y,
 				 '*': lambda x, y: x * y,
