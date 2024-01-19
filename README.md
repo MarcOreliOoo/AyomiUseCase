@@ -24,5 +24,8 @@ Exercise Plus :
 - At the root of the project there is the compose.yaml file for `docker-compose` instructions.
 - To launch the front, once the backend is up, in the frontfolder execute `yarn build` and `yarn preview`
 
+## Download datas
+- Top icon on the right next to the toogle theme switch
+
 ## Screen
 ![image](https://github.com/MarcOreliOoo/AyomiUseCase/assets/94016378/378b100e-d906-43c1-9d67-6f7c609102c6)
